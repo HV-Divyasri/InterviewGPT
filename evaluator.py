@@ -2,10 +2,8 @@ import os
 from groq import Groq
 from dotenv import load_dotenv
 
-# Load variables from the hidden .env file
 load_dotenv()
 
-# Connect client securely via environment variables
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 def evaluate_answer(question, answer):
@@ -31,7 +29,6 @@ def evaluate_answer(question, answer):
     """
 
     try:
-        # 2. Using the active stable model: llama-3.1-8b-instant
         response = client.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[
