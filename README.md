@@ -25,4 +25,4 @@ An AI-powered Technical Interview Coach built using RAG (Retrieval-Augmented Gen
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/InterviewGPT.git](https://github.com/HV-Divyasri/InterviewGPT.git)
+   git clone [https://github.com/HV-Divyasri/InterviewGPT.git](https://github.com/HV-Divyasri/InterviewGPT.git)
