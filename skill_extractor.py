@@ -5,17 +5,11 @@ from langchain_core.prompts import PromptTemplate
 from resume_parser import extract_resume_text
 from dotenv import load_dotenv
 
-# Load variables from the hidden .env file
 load_dotenv()
 
-# Initialize the ultra-fast Llama3 model via Groq
 llm = ChatGroq(model_name="llama-3.1-8b-instant", temperature=0.1)
 
 def extract_skills(resume_text):
-    """
-    Uses Groq AI to intelligently read and extract technical skills from resume text.
-    """
-    # System instructions guiding the AI on exactly what to do
     template = """
     You are an expert HR assistant and automated resume parser.
     Analyze the following resume text and extract all technical skills, programming languages, 
@@ -35,8 +29,6 @@ def extract_skills(resume_text):
     
     try:
         response = chain.invoke({"resume_text": resume_text})
-        
-        # Clean up any potential accidental spacing and parse into a Python list
         clean_content = response.content.strip()
         skills_list = json.loads(clean_content)
         return skills_list
@@ -46,7 +38,6 @@ def extract_skills(resume_text):
         return []
 
 if __name__ == "__main__":
-    # 2. Put your real test resume path here!
     pdf_file = r"C:\Users\Windows 11\Downloads\sample-resume-information-technology.pdf"
     
     print("Reading PDF file...")
