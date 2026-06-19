@@ -5,7 +5,7 @@ import os
 from resume_parser import extract_resume_text
 from skill_extractor import extract_skills
 from rag import create_vector_store, generate_question
-from evaluator import evaluate_answer, client # Reusing the groq client from evaluator
+from evaluator import evaluate_answer, client
 
 st.set_page_config(
     page_title="InterviewGPT",
@@ -18,7 +18,6 @@ st.subheader("AI Interview Coach using RAG + Groq")
 
 st.markdown("---")
 
-# Initialize session state variables so they don't disappear on page refreshes
 if "question" not in st.session_state:
     st.session_state.question = None
 if "skills" not in st.session_state:
@@ -26,9 +25,6 @@ if "skills" not in st.session_state:
 if "recommendations" not in st.session_state:
     st.session_state.recommendations = None
 
-# -----------------------------
-# Resume Upload
-# -----------------------------
 st.header("📄 Upload Resume")
 resume = st.file_uploader("Upload Resume PDF", type=["pdf"])
 
@@ -40,7 +36,6 @@ if resume is not None:
     resume_text = extract_resume_text(resume_path)
     st.success("Resume Uploaded Successfully")
 
-    # Extract skills only once and save to state
     if st.session_state.skills is None:
         st.session_state.skills = extract_skills(resume_text)
 
@@ -50,7 +45,6 @@ if resume is not None:
     else:
         st.warning("No skills detected.")
 
-    # ---- NEW: INSTANT RESUME IMPROVEMENT RECOMMENDATIONS ----
     st.subheader("💡 Resume Improvement Recommendations")
     
     if st.session_state.recommendations is None:
@@ -76,16 +70,12 @@ if resume is not None:
 
     if st.session_state.recommendations:
         st.markdown(st.session_state.recommendations)
-    # ---------------------------------------------------------
 
     try: os.remove(resume_path) 
     except: pass
 
 st.markdown("---")
 
-# -----------------------------
-# Interview PDF Upload
-# -----------------------------
 st.header("📚 Upload Interview Questions PDF")
 interview_pdf = st.file_uploader("Upload Interview Questions PDF", type=["pdf"])
 
@@ -104,9 +94,6 @@ if interview_pdf is not None:
     try: os.remove(pdf_path)
     except: pass
 
-# -----------------------------
-# Question & Evaluation Display
-# -----------------------------
 if st.session_state.question:
     st.markdown("---")
     st.header("🎤 Interview Question")
